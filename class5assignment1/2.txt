@@ -1,0 +1,6 @@
+properties([parameters([string(name: 'file_to_print', trim: true)])])
+node{
+    stage("Reading and printing ${env.file_to_print}"){
+        sh "cat ${env.file_to_print}"
+    }
+}

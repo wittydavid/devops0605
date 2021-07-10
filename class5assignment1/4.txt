@@ -1,0 +1,6 @@
+properties([parameters([string(name: 'from_location', trim: true), string(name: 'to_location', trim: true)])])
+node{
+    stage("Moving file from ${env.from_location} to ${env.to_location}"){
+        sh "mv ${env.from_location} ${env.to_location}"
+    }
+}

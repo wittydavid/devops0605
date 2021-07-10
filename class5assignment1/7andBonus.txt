@@ -1,0 +1,16 @@
+properties([pipelineTriggers([upstream('four_step_pipe, ')])])
+pipeline {
+  agent any
+  stages {
+    stage('test') {
+      steps {
+      # IMPORTANT - If we don't use the 'dir' command to run the python script the program will fail!
+      I.E -  sh "<directory>/Python3 <python_file>.py" - WILL FAIL
+      We must use dir for that reason
+          dir ('/Users/daskarian/devopsCourse/devops0605/class4assignment1'){
+              sh "Python3 5.py"
+          }
+      }
+    }
+  }
+}

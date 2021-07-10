@@ -1,0 +1,6 @@
+properties([pipelineTriggers([cron('0 8 * * *')])])
+node{
+    stage("Creating the file"){
+        echo "This is your 8am run :)"
+    }
+}

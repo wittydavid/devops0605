@@ -1,0 +1,9 @@
+properties([parameters([string(defaultValue: '/tmp', description: 'Where do you want to create the file?', name: 'file_location', trim: true), string(defaultValue: 'filename.txt', description: 'What\'s your file name?', name: 'file_name', trim: true), string(defaultValue: 'David', description: 'What do you want to write in the file?', name: 'file_content', trim: true)])])
+node{
+    stage("Creating the file"){
+        echo "Creating ${env.file_name} file in ${env.file_location}"
+        sh "touch ${env.file_location}/${env.file_name}"
+        echo "Writing ${env.file_content} into ${env.file_location}/${env.file_name}"
+        sh "echo ${env.file_content} > ${env.file_location}/${env.file_name}"
+    }
+}

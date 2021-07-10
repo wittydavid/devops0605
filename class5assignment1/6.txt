@@ -1,0 +1,27 @@
+properties([parameters([string(defaultValue: '/tmp/newfile.txt', name: 'file_create_location', trim: true), string(defaultValue: 'david was here', name: 'file_content', trim: true), string(defaultValue: '/tmp/tmp2/newfile.txt', name: 'file_new_location')]), pipelineTriggers([cron('0 8 * * *')])])
+pipeline {
+  agent any
+  stages {
+    stage('-- First Stage --') {
+      steps {
+        sh "touch ${env.file_create_location}"
+        sh "echo '${env.file_content}' > ${env.file_create_location}"
+      }
+    }
+    stage('-- Second Stage --') {
+      steps {
+        sh "cat ${env.file_create_location}"
+      }
+    }
+    stage('-- Third Stage --') {
+      steps {
+        sh "df -h"
+      }
+    }
+    stage('-- Fourth Stage --') {
+      steps {
+        sh "mv ${env.file_create_location} ${env.file_new_location}"
+      }
+    }
+  }
+}
