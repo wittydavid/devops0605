@@ -1,0 +1,61 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.41">
+  <actions>
+    <org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction plugin="workflow-multibranch@2.24">
+      <jobPropertyDescriptors>
+        <string>hudson.model.ParametersDefinitionProperty</string>
+        <string>org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty</string>
+      </jobPropertyDescriptors>
+    </org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>NAME</name>
+          <defaultValue>david</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>CHOICE</name>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>123</string>
+              <string>456</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers/>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.92">
+    <script>properties([parameters([string(defaultValue: &apos;david&apos;, name: &apos;NAME&apos;), choice(choices: [&apos;123&apos;, &apos;456&apos;], name: &apos;CHOICE&apos;)]), pipelineTriggers([cron(&apos;*/2 * * * *&apos;)])])
+node(&quot;node01&quot;) {
+    stage(&quot;ONE&quot;){
+        echo &quot;hello world!&quot;
+    }
+    stage(&quot;TWO&quot;){
+        if(env.NAME == &quot;david&quot;){
+            echo &quot;david is here&quot;
+        } else{
+            echo &quot;david is not here&quot;
+        }
+        sh &quot;date&quot;
+        // sleep time: 1, unit: &apos;MINUTES&apos;
+    }
+    stage(&quot;THREE&quot;){
+        echo &quot;You chose asd asd : ${env.CHOICE}&quot;
+        // input message: &apos;what is your name?&apos;, parameters: [string(defaultValue: &apos;not_david&apos;, name: &apos;NAME_TWO&apos;)]
+        // echo &quot;You chose: ${env.NAME_TWO}&quot;
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

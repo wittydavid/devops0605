@@ -1,0 +1,58 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.41">
+  <actions>
+    <org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction plugin="workflow-multibranch@2.24">
+      <jobPropertyDescriptors>
+        <string>hudson.model.ParametersDefinitionProperty</string>
+      </jobPropertyDescriptors>
+    </org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>choice_param</name>
+          <choices>
+            <string>1</string>
+            <string>2</string>
+            <string>3</string>
+            <string>4</string>
+            <string>5</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>gender</name>
+          <description>male
+female</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.92">
+    <script>properties([parameters([choice(choices: [&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;, &apos;5&apos;], name: &apos;choice_param&apos;), booleanParam(description: &apos;&apos;&apos;male
+female&apos;&apos;&apos;, name: &apos;gender&apos;)])])
+node{
+    stage(&quot;first stage&quot;){
+        echo &quot;hello first&quot;
+        f_name = input message: &apos;file name?&apos;, parameters: [string(name: &apos;F_NAME&apos;, trim: true)]
+        echo &quot;File name : $f_name&quot;
+    }
+    stage(&quot;second stage&quot;){
+        echo &quot;hello second&quot;
+        env.USER_NAME = input message: &apos;your name?&apos;, parameters: [string(name: &apos;USER_NAME&apos;, trim: true)]
+        echo &quot;your name : ${env.USER_NAME}&quot;
+    }
+    stage(&quot;third stage&quot;){
+        echo &quot;hello third&quot;
+        echo &quot;your choice : ${env.choice_param}&quot;
+        echo &quot;your gender : ${env.gender}&quot;
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

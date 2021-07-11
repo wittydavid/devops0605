@@ -1,0 +1,80 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.41">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.8.5"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.8.5">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+    <org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction plugin="workflow-multibranch@2.24">
+      <jobPropertyDescriptors>
+        <string>hudson.model.ParametersDefinitionProperty</string>
+        <string>org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty</string>
+      </jobPropertyDescriptors>
+    </org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>file_create_location</name>
+          <defaultValue>/tmp/newfile.txt</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>file_content</name>
+          <defaultValue>david was here</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>file_new_location</name>
+          <defaultValue>/tmp/tmp2/newfile.txt</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <hudson.triggers.TimerTrigger>
+          <spec>0 8 * * *</spec>
+        </hudson.triggers.TimerTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.92">
+    <script>properties([parameters([string(defaultValue: &apos;/tmp/newfile.txt&apos;, name: &apos;file_create_location&apos;, trim: true), string(defaultValue: &apos;david was here&apos;, name: &apos;file_content&apos;, trim: true), string(defaultValue: &apos;/tmp/tmp2/newfile.txt&apos;, name: &apos;file_new_location&apos;)]), pipelineTriggers([cron(&apos;0 8 * * *&apos;)])])
+pipeline {
+  agent any
+  stages {
+    stage(&apos;-- First Stage --&apos;) {
+      steps {
+        sh &quot;touch ${env.file_create_location}&quot;
+        sh &quot;echo &apos;${env.file_content}&apos; &gt; ${env.file_create_location}&quot;
+      }
+    }
+    stage(&apos;-- Second Stage --&apos;) {
+      steps {
+        sh &quot;cat ${env.file_create_location}&quot;
+      }
+    }
+    stage(&apos;-- Third Stage --&apos;) {
+      steps {
+        sh &quot;df -h&quot;
+      }
+    }
+    stage(&apos;-- Fourth Stage --&apos;) {
+      steps {
+        sh &quot;mv ${env.file_create_location} ${env.file_new_location}&quot;
+      }
+    }
+  }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

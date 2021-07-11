@@ -1,0 +1,31 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.41">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>ENV_PARAM</name>
+          <defaultValue>env_param</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.92">
+    <script>properties([parameters([string(defaultValue: &apos;env_param&apos;, name: &apos;ENV_PARAM&apos;)])])
+node(&quot;node01&quot;) {
+    stage(&quot;FIRST&quot;){
+        echo &quot;${env.ENV_PARAM}&quot;
+        input message: &apos;give me a message&apos;, parameters: [string(defaultValue: &apos;string_from_jenkins_input&apos;, name: &apos;INPUT&apos;)]
+        echo &quot;${env.INPUT}&quot;
+        sh &apos;python /Users/daskarian/devopsCourse/devops0605/my_jenkins.py&apos;
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

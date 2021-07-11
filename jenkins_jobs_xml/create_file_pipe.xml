@@ -1,0 +1,50 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.41">
+  <actions>
+    <org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction plugin="workflow-multibranch@2.24">
+      <jobPropertyDescriptors>
+        <string>hudson.model.ParametersDefinitionProperty</string>
+      </jobPropertyDescriptors>
+    </org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction>
+  </actions>
+  <description>This pipeline will create a text file in a location of your choice</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>file_location</name>
+          <description>Where do you want to create the file?</description>
+          <defaultValue>/tmp</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>file_name</name>
+          <description>What&apos;s your file name?</description>
+          <defaultValue>filename.txt</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>file_content</name>
+          <description>What do you want to write in the file?</description>
+          <defaultValue>David</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.92">
+    <script>properties([parameters([string(defaultValue: &apos;/tmp&apos;, description: &apos;Where do you want to create the file?&apos;, name: &apos;file_location&apos;, trim: true), string(defaultValue: &apos;filename.txt&apos;, description: &apos;What\&apos;s your file name?&apos;, name: &apos;file_name&apos;, trim: true), string(defaultValue: &apos;David&apos;, description: &apos;What do you want to write in the file?&apos;, name: &apos;file_content&apos;, trim: true)])])
+node{
+    stage(&quot;Creating the file&quot;){
+        echo &quot;Creating ${env.file_name} file in ${env.file_location}&quot;
+        sh &quot;touch ${env.file_location}/${env.file_name}&quot;
+        echo &quot;Writing ${env.file_content} into ${env.file_location}/${env.file_name}&quot;
+        sh &quot;echo ${env.file_content} &gt; ${env.file_location}/${env.file_name}&quot;
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
