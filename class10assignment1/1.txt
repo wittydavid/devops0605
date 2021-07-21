@@ -1,0 +1,1 @@
+kubectl run superset --image=amancevice/superset --port=8081

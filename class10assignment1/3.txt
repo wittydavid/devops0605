@@ -1,0 +1,28 @@
+# --- pod ---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: superset
+  name: superset
+spec:
+  containers:
+  - image: amancevice/superset
+    name: superset
+    ports:
+    - containerPort: 8081
+
+# --- service ---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: superset
+  name: supersetport
+spec:
+  ports:
+  - port: 4454
+    targetPort: 8081
+  selector:
+    run: superset
+  type: ClusterIP

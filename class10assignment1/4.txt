@@ -1,0 +1,3 @@
+kubectl run airflow --image=puckel/docker-airflow --port=8080
+
+kubectl expose pod airflow --name=svc-airflow --port=8080 --target-port=8080

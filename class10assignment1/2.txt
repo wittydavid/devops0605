@@ -1,0 +1,5 @@
+# --- ClusterIP type ---
+kubectl expose pod superset --port=4454 --name=supersetport --target-port=8081
+
+# --- NodePort ---
+kubectl expose pod superset --port=5799 --name=supersetnodeport --type=NodePort --target-port=8081
