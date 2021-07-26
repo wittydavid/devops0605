@@ -1,0 +1,9 @@
+In step 1 we:
+A. configured a new repository for jenkins Helm chart
+B. Installed an "instance" of a default jenkins architecture via the Helm charts we added.
+
+In step 2 we:
+created a Jenkins job that uses a kubernetes plugin, and more specifically "podTemplate" to
+1. create an ubuntu pod on the kubernetes cluster
+2. inside that newly created pod run the command - "df -h"
+3. termination of that pod

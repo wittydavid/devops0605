@@ -1,0 +1,8 @@
+# Used jenkins Snippet Generator to create this job
+podTemplate(cloud: 'kubernetes', containers: [containerTemplate(alwaysPullImage: true, args: '9999999', command: 'sleep', image: 'ubuntu:20.10', livenessProbe: containerLivenessProbe(execArgs: '', failureThreshold: 0, initialDelaySeconds: 0, periodSeconds: 0, successThreshold: 0, timeoutSeconds: 0), name: 'ubunto-con', resourceLimitCpu: '', resourceLimitEphemeralStorage: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestEphemeralStorage: '', resourceRequestMemory: '', workingDir: '/home/jenkins/agent')], name: 'run_ubuntu') {
+    node{
+        stage('run df -h'){
+        sh "df -h"
+        }
+    }
+}

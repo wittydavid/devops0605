@@ -1,0 +1,7 @@
+As you can see from the print screens I've added to the drive
+1. Persistency comes out of the box - pvc's for Jenkins are created in the helm chart by default.
+Jenkins pod "claims" storage via pvc ->
+    said pvc forwards a request to the storage class ->
+        storageClass (in our case this is the default storage class)
+        provisions the storage and creates a persistence volume to said pod.
+2. In our case the helm chart runs Jenkins pod as a non root user by default.

@@ -1,0 +1,12 @@
+# list current charts
+helm list
+
+# list current helm repos available
+helm repo list
+
+# Adding the jenkins helm repo
+helm repo add jenkins https://charts.jenkins.io
+helm repo update
+
+# installing the chart
+helm upgrade -i myjenkins jenkins/jenkins
