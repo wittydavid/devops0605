@@ -1,0 +1,18 @@
+pip install awscli
+aws configure
+aws ec2 help
+aws ec2 help
+aws ec2 stop-instances help
+#aws ec2 stop-instances h--instance-ids
+aws ec2 describe-instances
+aws ec2 describe-instances --filter Name=instance-type,Values=t2.micro
+##aws ec2 describe-instances --filter Name=instance-type,Values=t2.micro
+aws ec2 describe-instances --filter Name=instance-type,Values=t2.micro --query "Reservations[*].Instances[*].InstanceId" --output text
+aws ec2 stop-instances --instance-ids i-0f15dafe85ff7297c
+aws ec2 help
+aws ec2 run-instances --image-id ami-0c2b8ca1dad447f8a --instance-type t2.micro --key-name DevOps0605
+aws ec2 terminate-instances --instance-ids i-08dc64406c1b4fe26
+aws ec2 run-instances --image-id ami-0c2b8ca1dad447f8a --instance-type t2.micro --key-name DevOps0605
+awscli --version
+history | grep aws
+aws --version

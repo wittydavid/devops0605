@@ -1,0 +1,141 @@
+# Show current awscli configuration values
+aws configure list
+
+# Create security group
+aws ec2 create-security-group
+--group-name davidwp
+--description "wordpress group name"
+
+# Configure inbound network rules for security group
+aws ec2 authorize-security-group-ingress --group-id sg-00a5aeaa31e6d3cb0 --cidr 0.0.0.0/0 --protocol tcp --port 8000
+aws ec2 authorize-security-group-ingress --group-id sg-00a5aeaa31e6d3cb0 --cidr 176.229.196.25/32 --protocol tcp --port 22
+
+# Configure outbound network rules for security group
+# Checking the aws dashboard we can see that by default outbound rules are allowed anywhere
+
+# Allocating a public elastic ip
+aws ec2 allocate-address
+output:
+{
+    "PublicIp": "52.87.123.108",
+    "AllocationId": "eipalloc-0b8eb033af07ca024",
+    "PublicIpv4Pool": "amazon",
+    "NetworkBorderGroup": "us-east-1",
+    "Domain": "vpc"
+}
+
+# Create ec2 instance
+aws ec2 run-instances --image-id ami-09e67e426f25ce0d7 --instance-type t2.micro --security-group-ids sg-00a5aeaa31e6d3cb0 --key-name DevOps0605
+output:
+{
+    "Groups": [],
+    "Instances": [
+        {
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-09e67e426f25ce0d7",
+            "InstanceId": "i-03b61947f6f167832",
+            "InstanceType": "t2.micro",
+            "KeyName": "DevOps0605",
+            "LaunchTime": "2021-08-03T19:34:48.000Z",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "us-east-1a",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-172-31-30-129.ec2.internal",
+            "PrivateIpAddress": "172.31.30.129",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-3083ae7d",
+            "VpcId": "vpc-c58a23b8",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "65d7e44f-ab31-4aa9-a0ce-0d53d75a053f",
+            "EbsOptimized": false,
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2021-08-03T19:34:48.000Z",
+                        "AttachmentId": "eni-attach-095484ea5c951187a",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching",
+                        "NetworkCardIndex": 0
+                    },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "davidwp",
+                            "GroupId": "sg-00a5aeaa31e6d3cb0"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "0a:f5:f7:77:ef:e7",
+                    "NetworkInterfaceId": "eni-0328e44a0fe04b223",
+                    "OwnerId": "223557171129",
+                    "PrivateDnsName": "ip-172-31-30-129.ec2.internal",
+                    "PrivateIpAddress": "172.31.30.129",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateDnsName": "ip-172-31-30-129.ec2.internal",
+                            "PrivateIpAddress": "172.31.30.129"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-3083ae7d",
+                    "VpcId": "vpc-c58a23b8",
+                    "InterfaceType": "interface"
+                }
+            ],
+            "RootDeviceName": "/dev/sda1",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "davidwp",
+                    "GroupId": "sg-00a5aeaa31e6d3cb0"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 1,
+                "ThreadsPerCore": 1
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+                "State": "pending",
+                "HttpTokens": "optional",
+                "HttpPutResponseHopLimit": 1,
+                "HttpEndpoint": "enabled"
+            },
+            "EnclaveOptions": {
+                "Enabled": false
+            }
+        }
+    ],
+    "OwnerId": "223557171129",
+    "ReservationId": "r-049187f578daa8ffa"
+}
+
+aws ec2 associate-address --instance-id i-03b61947f6f167832 --public-ip 52.87.123.108
+{
+    "AssociationId": "eipassoc-077755d3cd7c67290"
+}
