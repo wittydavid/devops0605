@@ -8,6 +8,10 @@ aws ec2 create-security-group
 
 # Configure inbound network rules for security group
 aws ec2 authorize-security-group-ingress --group-id sg-00a5aeaa31e6d3cb0 --cidr 0.0.0.0/0 --protocol tcp --port 8000
+
+# Here it is idea to restrict the connection ip range to the smallest range possible (like you see in the example)
+# This is my private ip - however because I'm using the aws gui to connect to the server I used a 0.0.0.0/0
+# That's because I don't know the source of my aws gui connection attempt.
 aws ec2 authorize-security-group-ingress --group-id sg-00a5aeaa31e6d3cb0 --cidr 176.229.196.25/32 --protocol tcp --port 22
 
 # Configure outbound network rules for security group
