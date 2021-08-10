@@ -1,0 +1,10 @@
+The screen shots for
+
+The solution I though of for creating a new alert is updating
+https://github.com/avielb/advanced-devops/blob/master/monitoring/k8s-setup/prometheus/values.yml
+and adding a new entry for the alert manager.
+
+In the upper part of the file I can see that configuration for the alert managers "Email sending" so that remains unchanged.
+
+Question - 1. There's gotta be a better way to do that.
+2. I know that grafana has an alerting option - which is mort common to use?
