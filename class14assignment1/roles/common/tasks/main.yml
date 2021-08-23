@@ -1,0 +1,10 @@
+---
+- name: Installing zip and vim packages
+  apt:
+    name: "{{ apt_list }}"
+    state: present
+
+- name: Adding a file to {{ file_dest }}
+  ansible.builtin.file:
+    src: test1
+    path: "{{ file_dest }}"
