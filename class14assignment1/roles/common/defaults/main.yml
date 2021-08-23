@@ -3,4 +3,4 @@ apt_list:
   - vim
   - zip
 file_dest: /tmp/test1
-template_dest: /tmp/test1
+template_dest: /tmp/test2
