@@ -5,6 +5,6 @@
     state: present
 
 - name: Adding a file to /tmp/test1
-  ansible.builtin.file:
+  file:
     src: test1
     path: "{{ file_dest }}"
