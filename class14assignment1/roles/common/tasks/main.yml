@@ -8,3 +8,8 @@
   copy:
     src: test1
     dest: "{{ file_dest }}"
+
+- name: Adding a template to {{ template_dest }}
+  template:
+    src: test2
+    dest: "{{ template_dest }}"
