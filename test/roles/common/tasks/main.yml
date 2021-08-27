@@ -1,0 +1,10 @@
+---
+- name: Installing zip and vim packages
+  apt:
+    name: "{{ apt_list }}"
+    state: present
+
+- name: touch file if this is centOS
+  template:
+    src: test2
+    dest: "{{ template_dest }}"

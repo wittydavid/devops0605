@@ -1,0 +1,7 @@
+---
+apt_list:
+  - vim
+  - zip
+  - nginx
+file_dest: /tmp/test1
+template_dest: /tmp/this_is_centos

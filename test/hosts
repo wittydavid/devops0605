@@ -1,0 +1,6 @@
+[servers]
+node1 ansible_host=localhost ansible_port=49153
+node2 ansible_host=localhost ansible_port=49154
+
+[servers:vars]
+template_dest=/tmp/this_is_centos_from_group_vars

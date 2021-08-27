@@ -1,0 +1,15 @@
+pipeline {
+  agent any
+  stages {
+    stage('-- Git clone from Aviel repository --') {
+      steps {
+        git branch: 'main', url: 'https://github.com/avielb/hw-14'
+      }
+    }
+    stage('-- Create dummy scores.txt file --') {
+      steps {
+        sh 'ansible-playbook site.yml'
+      }
+    }
+  }
+}
